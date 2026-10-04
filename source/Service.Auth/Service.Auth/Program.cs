@@ -1,6 +1,6 @@
-using Service.Auth.BusinessImplement;
+using Service.Auth.Insfratructure.Configuration;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -8,9 +8,11 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddBusinessService();
+builder.Services.AddServiceConfigs();
 
-var app = builder.Build();
+builder.Services.AddAuthConfigs(builder.Configuration);
+
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

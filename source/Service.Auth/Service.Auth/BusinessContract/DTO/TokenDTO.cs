@@ -1,6 +1,6 @@
-﻿namespace Service.Auth.BusinessContract.DTO.Response
+﻿namespace Service.Auth.BusinessContract.DTO
 {
-  public class AuthResponse
+  public class TokensResponse
   {
     public string AccessToken { get; set; } = string.Empty;
     public string RefreshToken { get; set; } = string.Empty;
