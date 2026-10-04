@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Service.Auth.BusinessContract.DTO.Request;
-using Service.Auth.BusinessContract.DTO.Response;
+using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
+using Service.Auth.Common.ResultHandler;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,44 +12,19 @@ namespace Service.Auth.API
   public class AuthController(
     IAuthService authService) : ControllerBase
   {
+    // Sign up API
+    [HttpPost]
+    public async Task<IServiceResult> SignUp([FromBody] SignUpRequest signUpRequest)
+    {
+      IServiceResult result = await authService.SignUpAsync(signUpRequest);
+      return result;
+    }
+
     // Login API
     [HttpPost]
-    public IActionResult Login([FromBody] LoginRequest loginRequest)
+    public IActionResult LogIn([FromBody] LogInRequest logInRequest)
     {
-      AuthResponse authRes = authService.Login(loginRequest);
-      return Ok(authRes);
-    }
-
-    // GET: api/<AuthController>
-    [HttpGet]
-    public IEnumerable<string> Get()
-    {
-      return new string[] { "value1", "value2" };
-    }
-
-    // GET api/<AuthController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
-    {
-      return "value";
-    }
-
-    // POST api/<AuthController>
-    [HttpPost]
-    public void Post([FromBody] string value)
-    {
-    }
-
-    // PUT api/<AuthController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    // DELETE api/<AuthController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
+      return Ok(authService.LoginAsync(logInRequest));
     }
   }
 }

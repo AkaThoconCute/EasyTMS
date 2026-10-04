@@ -1,10 +1,11 @@
-﻿using Service.Auth.BusinessContract.DTO.Request;
-using Service.Auth.BusinessContract.DTO.Response;
+﻿using Service.Auth.BusinessContract.DTO;
+using Service.Auth.Common.ResultHandler;
 
 namespace Service.Auth.BusinessContract.Service
 {
   public interface IAuthService
   {
-    public AuthResponse Login(LoginRequest loginRequest);
+    public Task<ServiceResult<TokensResponse>> SignUpAsync(SignUpRequest signUpRequest);
+    public ServiceResult<TokensResponse> LoginAsync(LogInRequest logInRequest);
   }
 }
