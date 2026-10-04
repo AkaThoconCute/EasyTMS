@@ -29,16 +29,16 @@ namespace Service.Auth.BusinessImplement.Service
 
       if (createRes.Succeeded is false)
       {
-        string message = string.Join(", ", createRes.Errors.Select(e => e.Description));
+        string message = string.Join(" ", createRes.Errors.Select(e => e.Description));
         return ServiceResult.FromError<CoreUser>(Errors.UserCreationFailed.WithMessage(message));
       }
 
       // 2. Update the user to add role
-      IdentityResult updateRes = await userManager.AddToRoleAsync(user, role.ToString());
+      //IdentityResult updateRes = await userManager.AddToRoleAsync(user, role.ToString());
 
-      if (updateRes.Succeeded is false)
+      if (createRes.Succeeded is false)
       {
-        string message = string.Join(", ", updateRes.Errors.Select(e => e.Description));
+        string message = string.Join(", ", createRes.Errors.Select(e => e.Description));
         return ServiceResult.FromError<CoreUser>(Errors.UserCreationFailed.WithMessage(message));
       }
 

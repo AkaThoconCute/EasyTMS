@@ -45,7 +45,7 @@ namespace Service.Auth.BusinessImplement.Service
       try
       {
         // 1. Lấy thông tin cấu hình Token
-        string? key = config.GetValue<string?>("JWT:SigningKey");
+        string? key = config.GetValue<string?>("JWT:Key");
         if (string.IsNullOrEmpty(key))
         {
           return ServiceResult.FromError<string>(Errors.AccessTokenGernationFailed);

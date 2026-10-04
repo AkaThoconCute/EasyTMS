@@ -33,7 +33,7 @@ namespace Service.Auth.BusinessImplement.Service
       return ServiceResult.FromResult(tokens);
     }
 
-    public Task<ServiceResult<TokensResponse>> LoginAsync(LogInRequest logInRequest)
+    public ServiceResult<TokensResponse> LoginAsync(LogInRequest logInRequest)
     {
       // 1. Validate request
 
@@ -44,13 +44,13 @@ namespace Service.Auth.BusinessImplement.Service
       // 4. Generate token
 
       // 4. Return result
-      TokensResponse authRes = new()
+      TokensResponse tokensRes = new()
       {
         AccessToken = "AccessToken:Example",
         RefreshToken = "RefreshToken:Example"
       };
 
-      throw new NotImplementedException();
+      return ServiceResult.FromResult(tokensRes);
     }
   }
 }

@@ -9,7 +9,9 @@ namespace Service.Auth.Insfratructure.Configuration
 {
   public static class AuthConfigs
   {
-    public static IServiceCollection AddAuthConfigs(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddAuthConfigs(
+      this IServiceCollection services,
+      IConfiguration config)
     {
       // 1. Add user config
       services
@@ -17,6 +19,9 @@ namespace Service.Auth.Insfratructure.Configuration
         {
           options.Password.RequiredLength = 6;
           options.Password.RequireDigit = true;
+          options.Password.RequireLowercase = false;
+          options.Password.RequireUppercase = false;
+          options.Password.RequireNonAlphanumeric = false;
         })
         .AddEntityFrameworkStores<CoreDBContext>();
 
@@ -36,8 +41,8 @@ namespace Service.Auth.Insfratructure.Configuration
             ValidAudience = config["JWT:Audience"],
             ValidateAudience = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(config["JWT:SigningKey"] ?? throw new InvalidOperationException("JWT:SigningKey is missing"))
-            ),
+              Encoding.UTF8.GetBytes(config["JWT:Key"]
+              ?? throw new InvalidOperationException("JWT:Key was not found in configuration"))),
             ValidateIssuerSigningKey = true,
             ValidAlgorithms = [SecurityAlgorithms.HmacSha512],
             ClockSkew = TimeSpan.Zero
