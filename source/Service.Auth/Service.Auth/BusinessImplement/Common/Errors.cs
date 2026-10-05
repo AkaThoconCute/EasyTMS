@@ -1,4 +1,4 @@
-﻿using Service.Auth.Common.ResultHandler;
+﻿using Service.Auth.AppHost.Common.ResultHandler;
 
 namespace Service.Auth.BusinessImplement.Common
 {

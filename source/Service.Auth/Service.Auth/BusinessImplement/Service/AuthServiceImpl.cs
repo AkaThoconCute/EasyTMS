@@ -1,6 +1,6 @@
-﻿using Service.Auth.BusinessContract.DTO;
+﻿using Service.Auth.AppHost.Common.ResultHandler;
+using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
-using Service.Auth.Common.ResultHandler;
 using Service.Auth.RepositoryContract.Entity;
 
 namespace Service.Auth.BusinessImplement.Service
@@ -11,7 +11,8 @@ namespace Service.Auth.BusinessImplement.Service
   {
     public async Task<ServiceResult<TokensResponse>> SignUpAsync(SignUpRequest signUpRequest)
     {
-      // 1. Validate request (Data Annotations)
+      // 1. Validate request
+      // Data Annotations
 
       // 2. Create user
       ServiceResult<CoreUser> userRes = await userService.CreateUser(signUpRequest);
@@ -33,11 +34,13 @@ namespace Service.Auth.BusinessImplement.Service
       return ServiceResult.FromResult(tokens);
     }
 
-    public ServiceResult<TokensResponse> LoginAsync(LogInRequest logInRequest)
+    public async Task<ServiceResult<TokensResponse>> LogInAsync(LogInRequest logInRequest)
     {
       // 1. Validate request
+      // Data Annotations
 
       // 2. Find user
+
 
       // 3. Check password is match
 

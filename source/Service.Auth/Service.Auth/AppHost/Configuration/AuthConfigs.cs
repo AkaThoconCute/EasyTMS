@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using Service.Auth.Insfratructure.Context;
+using Service.Auth.AppHost.Context;
 using Service.Auth.RepositoryContract.Entity;
 using System.Text;
 
-namespace Service.Auth.Insfratructure.Configuration
+namespace Service.Auth.AppHost.Configuration
 {
   public static class AuthConfigs
   {

@@ -1,7 +1,7 @@
 ﻿using Service.Auth.BusinessContract.Service;
 using Service.Auth.BusinessImplement.Service;
 
-namespace Service.Auth.Insfratructure.Configuration
+namespace Service.Auth.AppHost.Configuration
 {
   public static class ServiceConfigs
   {
