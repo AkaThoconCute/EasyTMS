@@ -1,6 +1,6 @@
-﻿using Service.Auth.Insfratructure.Context;
+﻿using Service.Auth.AppHost.Context;
 
-namespace Service.Auth.Insfratructure.Configuration
+namespace Service.Auth.AppHost.Configuration
 {
   public static class DatabaseConfigs
   {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Service.Auth.AppHost.Common.ResultHandler;
 using Service.Auth.BusinessContract.Common;
 using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
 using Service.Auth.BusinessImplement.Common;
-using Service.Auth.Common.ResultHandler;
 using Service.Auth.RepositoryContract.Entity;
 
 namespace Service.Auth.BusinessImplement.Service
@@ -11,7 +11,9 @@ namespace Service.Auth.BusinessImplement.Service
   public class UserServiceImpl(
     UserManager<CoreUser> userManager) : IUserService
   {
-    public async Task<ServiceResult<CoreUser>> CreateUser(SignUpRequest signupRequest, RoleEnum role = RoleEnum.User)
+    public async Task<ServiceResult<CoreUser>> CreateUser(
+      SignUpRequest signupRequest,
+      RoleEnum role = RoleEnum.User)
     {
       // 1. Create a new user
       CoreUser user = new()

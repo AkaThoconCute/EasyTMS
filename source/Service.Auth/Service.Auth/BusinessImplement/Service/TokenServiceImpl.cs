@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Service.Auth.AppHost.Common.ResultHandler;
 using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
 using Service.Auth.BusinessImplement.Common;
-using Service.Auth.Common.ResultHandler;
 using Service.Auth.RepositoryContract.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

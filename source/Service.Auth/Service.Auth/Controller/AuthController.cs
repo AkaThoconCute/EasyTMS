@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Service.Auth.AppHost.Common.ResultHandler;
 using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
-using Service.Auth.Common.ResultHandler;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Service.Auth.API
+namespace Service.Auth.Controller
 {
   [Route("api/[controller]/[action]")]
   [ApiController]
@@ -16,15 +16,16 @@ namespace Service.Auth.API
     [HttpPost]
     public async Task<IServiceResult> SignUp([FromBody] SignUpRequest signUpRequest)
     {
-      IServiceResult result = await authService.SignUpAsync(signUpRequest);
+      var result = await authService.SignUpAsync(signUpRequest);
       return result;
     }
 
     // Login API
     [HttpPost]
-    public IActionResult LogIn([FromBody] LogInRequest logInRequest)
+    public async Task<IServiceResult> LogIn([FromBody] LogInRequest logInRequest)
     {
-      return Ok(authService.LoginAsync(logInRequest));
+      var result = await authService.LogInAsync(logInRequest);
+      return result;
     }
   }
 }

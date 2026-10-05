@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Service.Auth.RepositoryContract.Entity;
 
-namespace Service.Auth.Insfratructure.Context
+namespace Service.Auth.AppHost.Context
 {
   public class CoreDBContext(
     DbContextOptions<CoreDBContext> options,

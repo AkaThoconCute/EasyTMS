@@ -1,4 +1,4 @@
-using Service.Auth.Insfratructure.Configuration;
+using Service.Auth.AppHost.Configuration;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

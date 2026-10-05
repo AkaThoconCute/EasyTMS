@@ -1,4 +1,4 @@
-﻿namespace Service.Auth.Common.ResultHandler
+﻿namespace Service.Auth.AppHost.Common.ResultHandler
 {
   public class CustomError
   {
