@@ -1,4 +1,4 @@
-namespace EasyTMS.Services
+namespace EasyTMS.Auth.AppHost
 {
   public class WeatherForecast
   {

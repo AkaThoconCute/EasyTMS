@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasyTMS.Services.Controllers
+namespace EasyTMS.Auth.AppHost.Controllers
 {
   [ApiController]
   [Route("[controller]")]

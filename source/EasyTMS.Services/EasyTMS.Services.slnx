@@ -1,3 +1,9 @@
 <Solution>
-  <Project Path="EasyTMS.Services/EasyTMS.Services.csproj" />
+  <Folder Name="/EasyTMS.Auth/">
+    <Project Path="EasyTMS.Auth.AppHost/EasyTMS.Auth.AppHost.csproj" />
+    <Project Path="EasyTMS.Auth.Controllers/EasyTMS.Auth.Controllers.csproj" />
+    <Project Path="EasyTMS.Auth.Tests/EasyTMS.Auth.Tests.csproj" />
+  </Folder>
+  <Folder Name="/EasyTMS.Common/" />
+  <Folder Name="/EasyTMS.Notification/" />
 </Solution>
