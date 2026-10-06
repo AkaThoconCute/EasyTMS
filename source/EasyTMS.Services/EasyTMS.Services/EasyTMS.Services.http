@@ -1,6 +1,0 @@
-@EasyTMS.Services_HostAddress = http://localhost:5236
-
-GET {{EasyTMS.Services_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
