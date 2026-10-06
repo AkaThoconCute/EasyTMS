@@ -18,10 +18,10 @@ namespace Service.Auth.AppHost.Configuration
         .AddIdentity<CoreUser, IdentityRole>(options =>
         {
           options.Password.RequiredLength = 6;
-          options.Password.RequireDigit = true;
-          options.Password.RequireLowercase = false;
-          options.Password.RequireUppercase = false;
-          options.Password.RequireNonAlphanumeric = false;
+          //options.Password.RequireDigit = true;
+          //options.Password.RequireLowercase = false;
+          //options.Password.RequireUppercase = false;
+          //options.Password.RequireNonAlphanumeric = false;
         })
         .AddEntityFrameworkStores<CoreDBContext>();
 

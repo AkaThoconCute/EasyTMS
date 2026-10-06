@@ -5,8 +5,8 @@ POST {{Service.Auth_HostAddress}}/api/Auth/SignUp
 Content-Type: application/json
 
 {
-  "userName": "top1server",
-  "password": "123456",
+  "username": "top1server",
+  "password": "Abc@123",
   "fullName": "EasyTMS Administrator",
   "email": "top1server@example.com",
   "phone": "0912345678",
@@ -19,7 +19,7 @@ POST {{Service.Auth_HostAddress}}/api/Auth/SignUp
 Content-Type: application/json
 
 {
-  "userName": "tester1",
+  "username": "tester1",
   "password": "123456",
   "fullName": "Test 1",
   "email": "test1@example.com",
@@ -34,6 +34,16 @@ POST {{Service.Auth_HostAddress}}/api/Auth/Login
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "Password123!"
+  "username": "top1server",
+  "password": "Abc@123"
+}
+
+###
+
+POST {{Service.Auth_HostAddress}}/api/Auth/Login
+Content-Type: application/json
+
+{
+  "username": "tester1",
+  "password": "123456"
 }

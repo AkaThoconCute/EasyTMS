@@ -1,24 +1,22 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Service.Auth.AppHost.Common.ResultHandler;
 using Service.Auth.BusinessContract.Common;
 using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
-using Service.Auth.BusinessImplement.Common;
 using Service.Auth.RepositoryContract.Entity;
 
 namespace Service.Auth.BusinessImplement.Service
 {
   public class UserServiceImpl(
-    UserManager<CoreUser> userManager) : IUserService
+    UserManager<CoreUser> coreUserManager) : IUserService
   {
-    public async Task<ServiceResult<CoreUser>> CreateUser(
+    public async Task<CoreUser?> CreateUser(
       SignUpRequest signupRequest,
       RoleEnum role = RoleEnum.User)
     {
       // 1. Create a new user
       CoreUser user = new()
       {
-        UserName = signupRequest.UserName,
+        UserName = signupRequest.Username,
         FullName = signupRequest.FullName,
         Email = signupRequest.Email,
         PhoneNumber = signupRequest.Phone,
@@ -27,12 +25,12 @@ namespace Service.Auth.BusinessImplement.Service
 
       string password = signupRequest.Password;
 
-      IdentityResult createRes = await userManager.CreateAsync(user, password);
+      IdentityResult createRes = await coreUserManager.CreateAsync(user, password);
 
       if (createRes.Succeeded is false)
       {
         string message = string.Join(" ", createRes.Errors.Select(e => e.Description));
-        return ServiceResult.FromError<CoreUser>(Errors.UserCreationFailed.WithMessage(message));
+        return null;
       }
 
       // 2. Update the user to add role
@@ -41,18 +39,14 @@ namespace Service.Auth.BusinessImplement.Service
       if (createRes.Succeeded is false)
       {
         string message = string.Join(", ", createRes.Errors.Select(e => e.Description));
-        return ServiceResult.FromError<CoreUser>(Errors.UserCreationFailed.WithMessage(message));
+        return null;
       }
 
       // 3. Response
-      CoreUser? createdUser = await userManager.FindByNameAsync(user.UserName);
+      CoreUser? createdUser = await coreUserManager.FindByNameAsync(user.UserName);
+      if (createdUser is null) return null;
 
-      if (createdUser is null)
-      {
-        return ServiceResult.FromError<CoreUser>(Errors.UserCreationFailed);
-      }
-
-      return ServiceResult.FromResult(createdUser);
+      return createdUser;
     }
   }
 }
