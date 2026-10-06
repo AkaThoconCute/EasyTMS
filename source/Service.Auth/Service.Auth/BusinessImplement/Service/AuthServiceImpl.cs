@@ -1,59 +1,77 @@
-﻿using Service.Auth.AppHost.Common.ResultHandler;
+﻿using Microsoft.AspNetCore.Identity;
+using Service.Auth.AppHost.Common.ResultHandler;
 using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
+using Service.Auth.BusinessImplement.Common;
 using Service.Auth.RepositoryContract.Entity;
 
 namespace Service.Auth.BusinessImplement.Service
 {
   public class AuthServiceImpl(
     IUserService userService,
-    ITokenService tokenService) : IAuthService
+    ITokenService tokenService,
+    UserManager<CoreUser> coreUserManager,
+    SignInManager<CoreUser> signInManager) : IAuthService
   {
+    private const bool IsLockOutOnFailure = false;
+
     public async Task<ServiceResult<TokensResponse>> SignUpAsync(SignUpRequest signUpRequest)
     {
       // 1. Validate request
       // Data Annotations
 
       // 2. Create user
-      ServiceResult<CoreUser> userRes = await userService.CreateUser(signUpRequest);
-      if (!userRes.Success)
+      CoreUser? user = await userService.CreateUser(signUpRequest);
+      if (user is null)
       {
-        return ServiceResult.FromError<TokensResponse>(userRes.Error!);
+        return ServiceResult.FromError<TokensResponse>(Errors.SignUpFailed);
       }
-
-      CoreUser user = userRes.Result!;
 
       // 3. Generate tokens
-      var tokensRes = tokenService.GenerateTokenPair(user);
-      if (!tokensRes.Success)
+      TokensResponse? tokens = tokenService.GenerateTokenPair(user);
+      if (tokens is null)
       {
-        return ServiceResult.FromError<TokensResponse>(tokensRes.Error!);
+        return ServiceResult.FromError<TokensResponse>(Errors.SignUpError);
       }
 
-      TokensResponse tokens = tokensRes.Result!;
       return ServiceResult.FromResult(tokens);
     }
 
-    public async Task<ServiceResult<TokensResponse>> LogInAsync(LogInRequest logInRequest)
+    public async Task<ServiceResult<TokensResponse>> SignInAsync(SignInRequest signInRequest)
     {
       // 1. Validate request
       // Data Annotations
 
-      // 2. Find user
-
-
-      // 3. Check password is match
-
-      // 4. Generate token
-
-      // 4. Return result
-      TokensResponse tokensRes = new()
+      // 2. Check password
+      CoreUser? user = await CheckPasswordAsync(signInRequest);
+      if (user is null)
       {
-        AccessToken = "AccessToken:Example",
-        RefreshToken = "RefreshToken:Example"
-      };
+        return ServiceResult.FromError<TokensResponse>(Errors.LogInFailed
+          .WithMessage("Username or Password is incorrect. Please try again."));
+      }
 
-      return ServiceResult.FromResult(tokensRes);
+      // 3. Generate token
+      TokensResponse? tokens = tokenService.GenerateTokenPair(user!);
+      if (tokens is null)
+      {
+        return ServiceResult.FromError<TokensResponse>(Errors.LogInError);
+      }
+
+      return ServiceResult.FromResult(tokens!);
+    }
+
+    private async Task<CoreUser?> CheckPasswordAsync(SignInRequest signInRequest)
+    {
+      CoreUser? user = await coreUserManager.FindByNameAsync(signInRequest.Username);
+      if (user is null) return null;
+
+      SignInResult result = await signInManager.CheckPasswordSignInAsync(
+        user,
+        signInRequest.Password,
+        IsLockOutOnFailure);
+      if (result.Succeeded is false) return null;
+
+      return user;
     }
   }
 }

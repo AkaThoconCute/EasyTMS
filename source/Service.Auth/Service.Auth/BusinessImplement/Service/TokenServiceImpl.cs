@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using Service.Auth.AppHost.Common.ResultHandler;
 using Service.Auth.BusinessContract.DTO;
 using Service.Auth.BusinessContract.Service;
-using Service.Auth.BusinessImplement.Common;
 using Service.Auth.RepositoryContract.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,45 +16,35 @@ namespace Service.Auth.BusinessImplement.Service
 
   {
     // GenerateTokenPair
-    public ServiceResult<TokensResponse> GenerateTokenPair(CoreUser user)
+    public TokensResponse? GenerateTokenPair(CoreUser user)
     {
-      var accessTokenRes = GenerateAccessToken(user);
-      if (!accessTokenRes.Success)
-      {
-        return ServiceResult.FromError<TokensResponse>(accessTokenRes.Error!);
-      }
+      string? accessToken = GenerateAccessToken(user);
+      if (accessToken is null) return null;
 
-      var refreshTokenRes = GenerateRefreshToken(user);
-      if (!refreshTokenRes.Success)
-      {
-        return ServiceResult.FromError<TokensResponse>(refreshTokenRes.Error!);
-      }
+      string? refreshToken = GenerateRefreshToken(user);
+      if (refreshToken is null) return null;
 
-      return ServiceResult.FromResult(new TokensResponse()
+      return new TokensResponse()
       {
-        AccessToken = accessTokenRes.Result!,
-        RefreshToken = refreshTokenRes.Result!
-      });
+        AccessToken = accessToken!,
+        RefreshToken = refreshToken!
+      };
     }
 
     // GenerateAccessToken
-    private ServiceResult<string> GenerateAccessToken(CoreUser user) //, IList<string> roles)
+    private string? GenerateAccessToken(CoreUser user) //, IList<string> roles)
     {
       try
       {
-        // 1. Lấy thông tin cấu hình Token
-        string? key = config.GetValue<string?>("JWT:Key");
-        if (string.IsNullOrEmpty(key))
-        {
-          return ServiceResult.FromError<string>(Errors.AccessTokenGernationFailed);
-        }
+        // 1. Get Token config
+        if (user is null) return null;
 
-        // Kiểm tra key đủ độ dài cho HS512 (512 bits = 64 bytes)
+        string? key = config.GetValue<string?>("JWT:Key");
+        if (string.IsNullOrEmpty(key)) return null;
+
+        // Check key is 512 bits (64 bytes) for HS512
         byte[] keyBytes = Encoding.UTF8.GetBytes(key);
-        if (keyBytes.Length < 64)
-        {
-          return ServiceResult.FromError<string>(Errors.AccessTokenGernationFailed);
-        }
+        if (keyBytes.Length < 64) return null;
 
         SymmetricSecurityKey securityKey = new(keyBytes);
         SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha512Signature);
@@ -69,8 +57,8 @@ namespace Service.Auth.BusinessImplement.Service
         List<Claim> claims =
         [
           new(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-        new(JwtRegisteredClaimNames.GivenName, user.UserName ?? ""),
-        new(JwtRegisteredClaimNames.NameId, user.Id)
+          new(JwtRegisteredClaimNames.GivenName, user.UserName ?? ""),
+          new(JwtRegisteredClaimNames.NameId, user.Id)
         ];
 
         //foreach (string role in roles)
@@ -92,19 +80,21 @@ namespace Service.Auth.BusinessImplement.Service
         SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
         string tokenString = tokenHandler.WriteToken(token);
 
-        return ServiceResult.FromResult(tokenString);
+        return tokenString;
       }
       catch (Exception)
       {
-        return ServiceResult.FromError<string>(Errors.AccessTokenGernationError);
+        return null;
       }
     }
 
     // GenerateRefreshToken
-    private ServiceResult<string> GenerateRefreshToken(CoreUser user)
+    private string? GenerateRefreshToken(CoreUser user)
     {
       try
       {
+        if (user is null) return null;
+
         byte[] randomNumber = new byte[64];
         using var randomGenerator = RandomNumberGenerator.Create();
         randomGenerator.GetBytes(randomNumber);
@@ -116,11 +106,11 @@ namespace Service.Auth.BusinessImplement.Service
         user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(duration);
         userManager.UpdateAsync(user);
 
-        return ServiceResult.FromResult(tokenString);
+        return tokenString;
       }
       catch (Exception)
       {
-        return ServiceResult.FromError<string>(Errors.AccessTokenGernationError);
+        return null;
       }
     }
   }

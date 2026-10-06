@@ -8,11 +8,11 @@ namespace Service.Auth.BusinessContract.DTO
     [Required(ErrorMessage = "Username is required.")]
     [StringLength(100, ErrorMessage = "Username cannot exceed 100 characters.")]
     [RegularExpression(@"^[a-zA-Z0-9_]+$", ErrorMessage = "Username can only contain letters, digits, and underscores.")]
-    public string UserName { get; init; } = string.Empty;
+    public string Username { get; init; } = string.Empty;
 
-    [Required(ErrorMessage = "Password is required.")]
-    [MinLength(6, ErrorMessage = "Password must be at least 6 characters.")]
-    [RegularExpression(@"^\d+$", ErrorMessage = "Password must contain only numbers.")]
+    //[Required(ErrorMessage = "Password is required.")]
+    //[MinLength(6, ErrorMessage = "Password must be at least 6 characters.")]
+    //[RegularExpression(@"^\d+$", ErrorMessage = "Password must contain only numbers.")]
     public string Password { get; init; } = string.Empty;
 
     [Required(ErrorMessage = "Full Name is required.")]
@@ -28,20 +28,10 @@ namespace Service.Auth.BusinessContract.DTO
   }
 
   // LoginRequest
-  public class LogInRequest
+  public class SignInRequest
   {
-    private string _userName = string.Empty;
-    public string UserName
-    {
-      get => _userName;
-      init => _userName = value ?? string.Empty;
-    }
+    public string Username { get; init; } = string.Empty;
 
-    private string _password = string.Empty;
-    public string Passwords
-    {
-      get => _password;
-      init => _password = value ?? string.Empty;
-    }
+    public string Password { get; init; } = string.Empty;
   }
 }

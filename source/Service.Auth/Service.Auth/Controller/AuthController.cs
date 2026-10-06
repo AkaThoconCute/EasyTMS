@@ -22,9 +22,9 @@ namespace Service.Auth.Controller
 
     // Login API
     [HttpPost]
-    public async Task<IServiceResult> LogIn([FromBody] LogInRequest logInRequest)
+    public async Task<IServiceResult> SignIn([FromBody] SignInRequest signInRequest)
     {
-      var result = await authService.LogInAsync(logInRequest);
+      var result = await authService.SignInAsync(signInRequest);
       return result;
     }
   }
