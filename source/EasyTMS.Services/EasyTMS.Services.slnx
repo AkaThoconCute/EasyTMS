@@ -2,6 +2,7 @@
   <Folder Name="/EasyTMS.Auth/">
     <Project Path="EasyTMS.Auth.AppHost/EasyTMS.Auth.AppHost.csproj" />
     <Project Path="EasyTMS.Auth.BusinessContract/EasyTMS.Auth.BusinessContract.csproj" Id="b7f00468-7f5a-43f6-899d-1974c9719d7c" />
+    <Project Path="EasyTMS.Auth.BusinessImplement/EasyTMS.Auth.BusinessImplement.csproj" Id="464056f3-6636-4354-9a24-e6c04202f2c5" />
     <Project Path="EasyTMS.Auth.Controllers/EasyTMS.Auth.Controllers.csproj" />
     <Project Path="EasyTMS.Auth.RepositoryContract/EasyTMS.Auth.RepositoryContract.csproj" Id="bd850064-becd-4bed-a3bf-a6cfbe2c5fc7" />
     <Project Path="EasyTMS.Auth.Tests/EasyTMS.Auth.Tests.csproj" />
