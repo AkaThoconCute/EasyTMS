@@ -24,4 +24,25 @@ namespace Service.Auth.AppHost.Context
       builder.UseSqlServer(connectionString);
     }
   }
+
+  public class X(
+  DbContextOptions<CoreDBContext> options,
+  IConfiguration config) : DbContext(options)
+  {
+    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    {
+      if (builder.IsConfigured)
+      {
+        throw new InvalidOperationException("ConnectionStrings.Database must not be pre-configured before CoreDBContext.");
+      }
+
+      string? connectionString = config.GetConnectionString("Database");
+      if (string.IsNullOrEmpty(connectionString))
+      {
+        throw new InvalidOperationException("ConnectionStrings.Database was not found in configuration.");
+      }
+
+      builder.UseSqlServer(connectionString);
+    }
+  }
 }

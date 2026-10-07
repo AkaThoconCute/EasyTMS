@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\EasyTMS.Auth.BusinessContract\EasyTMS.Auth.BusinessContract.csproj" />
-	</ItemGroup>
-
 </Project>

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasyTMS.Auth.RepositoryContract\EasyTMS.Auth.RepositoryContract.csproj" />
+    <ProjectReference Include="..\EasyTMS.Common\EasyTMS.Common.csproj" />
+  </ItemGroup>
+
+</Project>
