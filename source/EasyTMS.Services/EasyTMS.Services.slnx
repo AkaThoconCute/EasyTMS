@@ -6,6 +6,8 @@
     <Project Path="EasyTMS.Auth.RepositoryContract/EasyTMS.Auth.RepositoryContract.csproj" Id="bd850064-becd-4bed-a3bf-a6cfbe2c5fc7" />
     <Project Path="EasyTMS.Auth.Tests/EasyTMS.Auth.Tests.csproj" />
   </Folder>
-  <Folder Name="/EasyTMS.Common/" />
+  <Folder Name="/EasyTMS.Common/">
+    <Project Path="EasyTMS.Common/EasyTMS.Common.csproj" Id="c56e64df-ac11-4ea2-b300-d67f8c9f604d" />
+  </Folder>
   <Folder Name="/EasyTMS.Notification/" />
 </Solution>

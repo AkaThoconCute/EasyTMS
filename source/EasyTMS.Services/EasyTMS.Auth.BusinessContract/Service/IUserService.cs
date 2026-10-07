@@ -1,6 +1,6 @@
-﻿using EasyTMS.Auth.BusinessContract.Enum;
+﻿using EasyTMS.Auth.BusinessContract.DTO;
+using EasyTMS.Auth.BusinessContract.Enum;
 using EasyTMS.Auth.RepositoryContract.Entity;
-using static EasyTMS.Auth.BusinessContract.DTO.AuthDTO;
 
 namespace EasyTMS.Auth.BusinessContract.Service
 {

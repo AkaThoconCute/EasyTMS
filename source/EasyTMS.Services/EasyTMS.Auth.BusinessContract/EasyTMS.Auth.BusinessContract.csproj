@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EasyTMS.Auth.RepositoryContract\EasyTMS.Auth.RepositoryContract.csproj" />
+    <ProjectReference Include="..\EasyTMS.Common\EasyTMS.Common.csproj" />
   </ItemGroup>
 
 </Project>
