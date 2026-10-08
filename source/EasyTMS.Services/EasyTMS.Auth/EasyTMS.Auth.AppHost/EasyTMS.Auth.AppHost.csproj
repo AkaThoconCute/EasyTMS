@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EasyTMS.Common\EasyTMS.Common.Web\EasyTMS.Common.Web.csproj" />
     <ProjectReference Include="..\EasyTMS.Auth.BusinessImplement\EasyTMS.Auth.BusinessImplement.csproj" />
     <ProjectReference Include="..\EasyTMS.Auth.Controllers\EasyTMS.Auth.Controllers.csproj" />
-    <ProjectReference Include="..\EasyTMS.Common.Web\EasyTMS.Common.Web.csproj" />
   </ItemGroup>
 
 </Project>
